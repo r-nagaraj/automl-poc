@@ -1,0 +1,12 @@
+numpy
+pandas
+scikit-learn
+Werkzeug
+Flask
+gunicorn
+Jinja2
+os
+scipy
+matplotlib
+bootstrap-py
+html5
