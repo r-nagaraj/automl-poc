@@ -18,7 +18,8 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads/'
+#UPLOAD_FOLDER = 'uploads/'
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 ALLOWED_EXTENSIONS = set(['csv'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024 * 1024
@@ -263,7 +264,9 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path_to_file = 'uploads/' + filename
+            #path_to_file = 'uploads/' + filename
+            path_to_file =  os.path.join(os.getcwd(), 'uploads') + filename
+            print(path_to_file)
             df = read_file(path_to_file)
             rows, cols, missing_values_sum, desc_stat = dataset_overview(df)
             col_names = df.columns.tolist()
