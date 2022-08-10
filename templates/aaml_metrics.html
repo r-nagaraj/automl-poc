@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	</head>
+	<body>
+	
+	<div class='jumbotron text-center' style='background-color:#005bbb;'>
+		<font color='white'><h1>Auto ML</h1></font>
+	</div>
+	
+	<div class='col-xs-12'>
+		<h2><u>Results:</u></h2><br>
+		<b>Total Number of Samples in Train Data = {{ train_len }}</b><br>
+		<b>Total Number of Samples in Test Data = {{ test_len }}</b>
+	</div>
+	<div class='col-xs-6'>
+	{% if alert == 1 %}
+		{% for pkg in model_pkg %}
+			{% for p in pkg %}
+				{% if loop.index == 1 %}
+					<p><b>Model:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 2 %}
+					<p><b>MAE:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 3 %}
+					<p><b>MSE:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 4 %}
+					<p><b>RMSE:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 5 %}
+					<p><b>R-squared:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 6 %}
+					<p><b>Coeffcients/Feature Importance:</b> {{ p | safe }}</p>
+				{% endif %}
+				
+			{% endfor %}
+			<br>
+			<hr>
+			<br>
+		{% endfor %}
+	{% endif %}
+	
+	{% if alert == 0 %}
+		{% for pkg in model_pkg %}
+			{% for p in pkg %}
+				{% if loop.index == 1 %}
+					<p><b>Model:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 2 %}
+					<p><b>Accuracy:</b> {{ p }}</p>
+				{% endif %}
+				
+				{% if loop.index == 3 %}
+					<p><b>Confusion Matrix:</b> {{ p | safe }}</p>
+				{% endif %}
+				
+				{% if loop.index == 4 %}
+					<p><b>Classification Report:</b> {{ p | safe }}</p>
+				{% endif %}
+				
+				{% if loop.index == 5 %}
+					<p><b>Coeffcients/Feature Importance:</b> {{ p | safe }}</p>
+				{% endif %}
+				
+			{% endfor %}
+			<br>
+			<hr>
+			<br>
+		{% endfor %}
+	{% endif %}
+	</div>
+ 	</body>
+</html>

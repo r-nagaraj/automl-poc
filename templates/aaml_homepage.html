@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<style>
+			.table {width: 0;}
+			table {font-size: small;}
+		</style>
+	</head>
+	<body>
+		<div class='jumbotron text-center' style='background-color:#005bbb;'>
+			<font color='white'><h1>Auto ML</h1></font>
+		</div>
+		
+		<form method="post" action="/" enctype="multipart/form-data">
+		<div class='col-xs-12'>
+			<h2>Upload your dataset</h2>
+		</div>
+		
+		<div class='col-xs-6'>
+			<input type="file" class='form-control'  name="file" autocomplete="off" required>
+		</div>
+		
+		<div class='col-xs-6'>
+			{% if alert == 0 %}
+				<p class='alert alert-danger'>File could not be uploaded. Allowed file types are .csv.</p>
+			{% endif %}
+			
+			{% if alert == 1 %}
+				<p class='alert alert-success'>File {{ filename }} successfully uploaded.</p>
+			{% endif %}
+		</div>
+		
+		<br>
+		<div class='col-xs-6' style="display: inline">
+			<input type="submit" class='btn btn-primary'  value="Next">
+			<br><br>
+		</div>
+		</form>
+		
+		{% if alert == 1 %}
+		
+		<div class='col-xs-12'>
+			<h2><u>Dataset Overview:</u></h4><br>
+			<p><h4><b>Number of Rows:</b> {{ rows }} | <b>Number of Columns:</b> {{ cols }}</h4></p>
+			<p><h4><b>Columns Types and Missing Values:</b></h4></p>
+			{{ mv_table | safe }}
+			<p><h4><b>Total number of missing values:</b> {{ missing_values_sum }}</h4></p>
+			<p><h4><b>Descriptive Statistics:</b></h4></p>
+				{{ desc_table | safe }}
+		</div>
+		
+		<form method="post" action="/preprocess">
+			<div class='col-xs-12'>
+				<h2>Column Selection</h2>
+			</div>
+			
+			<div class = 'col-xs-12'>
+				{% for col in col_names %}
+					<div class='col-xs-4'>
+						<input type="checkbox" name="{{ col }}"><label> {{ col }}</label>
+					</div>
+				{% endfor %}
+				<br><br>
+			</div>
+			<hr>
+			<div class='col-xs-12'>
+				<h2>Target Selection</h2>
+			</div>
+			<div class = 'col-xs-12'>
+				{% for col in col_names %}
+					<div class='col-xs-4'>
+						<input type="radio" name="target" value="{{ col }}"><label> {{ col }}</label>
+					</div>
+				{% endfor %}
+				<br><br>
+			</div>
+			
+			<div class='col-xs-6' style="display: inline">
+				<input type="submit" class='btn btn-primary'  value="Next">
+			<br><br>
+			</div>
+		</form>
+		
+		
+		{% endif %}
+		
+	</body>
+</html>

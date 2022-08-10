@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<style>
+			.table {width: 0;}
+			table {font-size: small;}
+		</style>
+	</head>
+	<body>
+		<div class='jumbotron text-center' style='background-color:#005bbb;'>
+			<font color='white'><h1>Auto ML</h1></font>
+		</div>
+		<form method="post" action="/buildML">
+		
+			<div class='col-xs-12'>
+				<h2>Step 3:</h2>
+				<h4><u>Following columns data type were changed from numeric to categorical:</u></h4>
+				<p><b>{{ changed_cols | safe}}</b></p>
+			</div> 
+			
+			<div class='col-xs-12'>
+				<h4><u>Handling Missing Values:</u></h4>
+			</div>
+			
+			<div class = 'col-xs-12'>
+				{% for col in selected_cols %}
+					<div class='col-xs-4'>
+						<p><b>{{ col }}</b></p>
+						{% if 'object' not in col %}
+							<input type="radio" name="mean" value="{{ col }}"><label>Replace with Mean</label>
+							<br>
+							<input type="radio" name="median" value='{{ col }}'><label>Replace with Median</label>
+							<br>
+							<input type="radio" name="mode" value='{{ col }}'><label>Replace with Mode</label>
+						{% endif %}
+						
+						{% if 'object' in col %}
+							<input type="radio" name="mode" value='{{ col }}'><label>Replace with Mode</label>
+						{% endif %}
+					</div>
+				{% endfor %}
+				<br><br>
+			</div>
+			<div class='col-xs-6' style="display: inline">
+				<input type="submit" name='form3' class='btn btn-primary'  value="Next">
+			<br><br>
+			</div>
+		</form>
+		
+	</body>
+<html>
+	
+	
